@@ -1,71 +1,79 @@
-//===============================================Задание №1============================================
 
-//Массивы совмещают в себе следующие структуры данных:
-// Стэк, 
-// Очередь, 
-// Двусторонняя очередь,
-// Упорядоченный список.
+//===============================================Задание №3============================================
 
-//Массив в JavaSkript может хранить в себе данные разных типов и  позволяет динамический изменять длину массива. Т.е. является гетерогенным.
+let person = {
+    name: "Evgenii",
+    age: "27",
+};
 
-//===============================================Задание №2============================================
-
-
-function logger() {
-    console.log(`I output only external context: ${this.item}`);
+person.logInfo = function(){
+    return `Name: ${this.name}, Age: ${this.age}`
 }
 
-const obj = { item: "some value" };
+let personNew = new Object({
+    name: "Anton",
+    age: "29",
+});
 
-logger.apply(call);
+let personCreate = Object.create(person);
 
-logger.apply(obj);
+personCreate.name = "Anastasya";
+personCreate.age = "25";
 
-const bounderLogger = logger.bind(obj);
-
-//===============================================Задание №3.1============================================
-
-const numberArr = [1,2,3,4,5];
-
-numberArr.reduce((acc,item)=>{
-    acc += item;
-    return acc;
-}, 0);
-
-
-const stringArr = ['a','b','c','d'];
-
-stringArr.join('');
-
-function maxAndMinValue(arr){
-    let min = arr[0];
-    let max = arr[0];
-
-    if(arr.length === 0){
-        return 'Массив пуст';
-    }else if(arr.length === 1){
-        return `Min: ${arr[0]}, Max: ${arr[0]}`;
+class PersonClass{
+    constructor(name, age){
+        this.name = name;
+        this.age = age;
     }
 
-    for(let i = 1; i < arr.length; i++){
-        if(arr[i] > max){
-            max = arr[i];
-        }else if(arr[i] < min){
-            min = arr[i];
+    logInfo() {
+        console.log(`Name: ${this.name}, Age: ${this.age}`);
+    }
+}
+
+let person2 = {
+    name: "Petr",
+    age: "18",
+    _proto_: person,
+}
+
+let person2Create = Object.create(person)
+
+Object.defineProperties(person, 'logInfo',{
+    value: function(){
+        return `Name: ${this.name}, Age: ${this.age}`
+    }
+})
+
+//===============================================Задание №4============================================
+
+class PersonThree extends PersonClass {
+    constructor(name, age) {
+        super(name, age);
+    }
+
+    get name() {
+        return this.name;
+    }
+
+    set name(value) {
+        this.name = value;
+    }
+}
+
+//===============================================Задание №5*============================================
+
+function firstSum(arr, total) {
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = i + 1; j < arr.length; j++) {
+            if (arr[i] + arr[j] === total) {
+                return [arr[i], arr[j]];
+            }
         }
     }
-
-    return `Min: ${min}, Max: ${max}`;
+    return null;
 }
 
-//===============================================Задание №3.2============================================
+//===============================================Задание №5**============================================
 
-let stackArr = [1,2,3,4,5,6,7]
-
-stackArr.push(9);
-stackArr.pop(stackArr.length - 1);
-
-//===============================================Задание №3.3============================================
-
-stackArr.push(10);
-stackArr.shift()
+//Сложность (Big O): O(n²)
