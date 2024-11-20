@@ -1,79 +1,66 @@
 
-//===============================================Задание №3============================================
+//===================================================Задание №1==============================
+let promiseTwo = new Promise((resolve, reject) => {
+    resolve("a"); // зарезолвит промис со значением 'a'
+  });
+  
+  promiseTwo
+    .then((res) => { // res = 'a'
+      return res + "b"; // вернёт промис со значением 'ab'
+    })
+    .then((res) => { // res = 'ab'
+      return res + "с"; // вернёт промис со значением 'abc'
+    })
+    .finally((res) => { // res = undefined
+      return res + "!!!!!!!"; // ничего не вернёт
+    })
+    .catch((res) => { // пропустит этот блок
+      return res + "d";
+    })
+    .then((res) => { // res = 'abc'
+      console.log(res); // выведет в консоль 'abc', вернёт промис со значением undefined
+    });
+  
+  // порядок вывода в консоль:
+  // 1) 'abc'
 
-let person = {
-    name: "Evgenii",
-    age: "27",
-};
 
-person.logInfo = function(){
-    return `Name: ${this.name}, Age: ${this.age}`
-}
+//===================================================Задание №2==============================
 
-let personNew = new Object({
-    name: "Anton",
-    age: "29",
-});
+  function doSmth() {
+    return Promise.resolve("123");
+  }
+  
+  doSmth() // вернёт зарезолвенный промис со значением '123'
+    .then(function (a) { // a = '123'
+      console.log("1", a); // выведет в консоль '1 123'
+      return a; // вернёт промис со значением '123'
+    })
+    .then(function (b) { // b = '123'
+      console.log("2", b); // выведет в консоль '2 123'
+      return Promise.reject("321"); // отклонит промис со значением '321'
+    })
+    .catch(function (err) { // err = '321'
+      console.log("3", err); // выведет в консоль '3 321', вернёт промис со значением undefined
+    })
+    .then(function (c) { // c = undefined
+      console.log("4", c); // выведет в консоль '4 undefined'
+      return c; // вернёт промис со значением 'undefined'
+    });
+  
+  // порядок вывода в консоль: 
+  // 1) '1 123'
+  // 2) '2 123'
+  // 3) '3 321'
+  // 4) '4 undefined'
 
-let personCreate = Object.create(person);
+  //===================================================Задание №2==============================
 
-personCreate.name = "Anastasya";
-personCreate.age = "25";
-
-class PersonClass{
-    constructor(name, age){
-        this.name = name;
-        this.age = age;
-    }
-
-    logInfo() {
-        console.log(`Name: ${this.name}, Age: ${this.age}`);
-    }
-}
-
-let person2 = {
-    name: "Petr",
-    age: "18",
-    _proto_: person,
-}
-
-let person2Create = Object.create(person)
-
-Object.defineProperties(person, 'logInfo',{
-    value: function(){
-        return `Name: ${this.name}, Age: ${this.age}`
-    }
-})
-
-//===============================================Задание №4============================================
-
-class PersonThree extends PersonClass {
-    constructor(name, age) {
-        super(name, age);
-    }
-
-    get name() {
-        return this.name;
-    }
-
-    set name(value) {
-        this.name = value;
-    }
-}
-
-//===============================================Задание №5*============================================
-
-function firstSum(arr, total) {
-    for (let i = 0; i < arr.length; i++) {
-        for (let j = i + 1; j < arr.length; j++) {
-            if (arr[i] + arr[j] === total) {
-                return [arr[i], arr[j]];
-            }
-        }
-    }
-    return null;
-}
-
-//===============================================Задание №5**============================================
-
-//Сложность (Big O): O(n²)
+  function showOutpu(arr) {
+    arr.forEach((item, index) => {
+      setTimeout(() => console.log(index), 3000);
+    });
+  }
+  
+  const arr = [10, 12, 15, 21];
+  showOutpu(arr);
